@@ -1,5 +1,6 @@
 **BÀI TẬP CODE ASM**  
-_BÀI 1: NHẬP CHUỖI, IN RA CHUỖI VỪA NHẬP_  
+_BÀI 1: NHẬP CHUỖI, IN RA CHUỖI VỪA NHẬP_
+```
         .model small  
         .stack 100  
         .data  
@@ -27,8 +28,10 @@ _BÀI 1: NHẬP CHUỖI, IN RA CHUỖI VỪA NHẬP_
             mov ah,4CH
             int 21h    
         main endp
-     end  
-_BÀI 2: NHẬP CHUỖI, IN RA CHUỖI HOA_  
+     end
+``` 
+_BÀI 2: NHẬP CHUỖI, IN RA CHUỖI HOA_
+```
 .Model Small  
 .Stack 100h  
 .Data  
@@ -70,8 +73,10 @@ tb2 DB 10, 13, 'Chuyen sang chuoi in hoa: $'
             JNE Lap2
         RET
     inhoa endp
-    end  
-_BÀI 3: NHẬP CHUỖI, IN RA ĐỘ DÀI CHUỖI VỪA NHẬP_  
+    end
+``` 
+_BÀI 3: NHẬP CHUỖI, IN RA ĐỘ DÀI CHUỖI VỪA NHẬP_
+```
 .MODEL small  
 .STACK 100  
 .DATA  
@@ -123,8 +128,10 @@ _BÀI 3: NHẬP CHUỖI, IN RA ĐỘ DÀI CHUỖI VỪA NHẬP_
         MOV AH,4ch
         INT 21h
     END MAIN  
-    End  
-_BÀI 4: NHẬP CHUỖI, IN RA CHUỖI ĐẢO_  
+    End
+```  
+_BÀI 4: NHẬP CHUỖI, IN RA CHUỖI ĐẢO_
+```
 .model small  
 .stack 100  
 .data   
@@ -165,5 +172,6 @@ _BÀI 4: NHẬP CHUỖI, IN RA CHUỖI ĐẢO_
 		INT 21H
     main endp
     end
+```
 
 **HẾT NHÉ**
