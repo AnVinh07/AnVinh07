@@ -1,6 +1,6 @@
 _**CÁCH THỨC HOẠT ĐỘNG CỦA IDA**_
 
-**#CÁC THAO TÁC CƠ BẢN**
+**#CÁC THAO TÁC CƠ BẢN TRÊN IDA**
 
 _- Khi nạp file vào IDA_  
 ```
@@ -38,7 +38,8 @@ Ví dụ như tại điểm bắt đầu của một hàm, các địa chỉ đ�
 Điều này xảy ra là bình thường vì có rất nhiều thông tin từ địa chỉ đó và nó không đủ để biểu diễn / hiển thị trên cùng một dòng._  
 ![image-15](https://github.com/AnVinh07/AnVinh07/assets/131764804/ec79658a-281e-48eb-a674-37ad9b6813ff)
 _- Mẹo nhỏ là tìm điểm kết thúc của cùng một địa chỉ được lặp lại, tại đó chúng ta sẽ thấy nơi bắt đầu của lệnh được disassembly.  
-Trong trường hợp này, lệnh tương ứng với địa chỉ 401000 là push 0._  
+Trong trường hợp này, lệnh tương ứng với địa chỉ 401000 là push 0._
+
 _- Trong IDA, ta có thể độc lập tùy chỉnh giao diện mặc định cho Loader và Debugger.  
 Tại màn hình Loader, khi đã thiết lập các cửa sổ và các tab mà chúng ta sử dụng nhiều nhất theo ý thích của mình,  
 ta có thể lưu lại bằng cách vào Windows-Save Desktop và tích chọn Default để lưu vào cấu hình mặc định.  
@@ -48,14 +49,17 @@ Tương tự, trong chế độ Debugger, ta cũng có thể tùy chỉnh theo �
 
 _- Chúng ta có thể tìm kiếm tại các cửa sổ này bằng cách nhấn CTRL + F, khung tìm kiếm nhỏ sẽ xuất hiện bên dưới, cho phép lọc theo những gì chúng ta nhập vào.  
 Trong View-Open Subview-Strings như ở ví dụ bên dưới, IDA sẽ hiển thị cho ta những chuỗi có chứa “try”:_  
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/488d9acc-c0d0-4d8c-ac2b-a51c0be2d8f3)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/488d9acc-c0d0-4d8c-ac2b-a51c0be2d8f3)
+
 _- Ngoài ra, nếu chọn View-Open Subview-Disassembly, thì có thể mở một cửa sổ disassembly thứ hai,  
 qua đó có thể truy xuất tới các hàm khác với cửa sổ đầu tiên và như vậy ta có thể phân tích được nhiều hàm tại cùng một thời điểm._  
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/2073bf46-9495-4585-9a94-fe32498902b9)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/2073bf46-9495-4585-9a94-fe32498902b9)
+
 _IDA cũng cung cấp một cửa sổ hiển thị dạng hexadecimal(hex), cửa sổ này có tên là Hex View_  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/168d6451-49ba-4b7a-9e10-c0aaa64e007d)  
-_- Nếu bạn không thấy cửa sổ này, có thể hiển thị nó qua View –> Open Subview -> Hex dump.  
-Cũng từ Open Subview, ta có thể truy xuất thông tin về các hàm được chương trình import thông qua Imports tab như hình dưới đây:_  
+_- Nếu bạn không thấy cửa sổ này, có thể hiển thị nó qua View –> Open Subview -> Hex dump._
+
+_- Cũng từ Open Subview, ta có thể truy xuất thông tin về các hàm được chương trình import thông qua Imports tab như hình dưới đây:_  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/38ec1622-08dc-46cd-a14f-cbbd3080fd75)
 
 **#Chuyển đổi giữa các hệ số trong IDA**  
@@ -76,7 +80,7 @@ Nó sẽ xem xét các biểu thức và hiển thị các kí tự tương ứn
 _- Trong cửa sổ Hex Dump của IDA chúng ta cũng có một cột để hiển thị các kí tự tương ứng:_  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/f6a92179-bd67-4992-b7b7-d4d7bd97bf6d)
 
-**#Chức năng tìm kiếm trong IDA**
+**#Chức năng tìm kiếm(search) trong IDA**
 
 _- IDA sẽ cung cấp cho chúng ta nhiều lựa chọn tìm kiếm rất dễ hiểu.  
 Khi chuyển sang các tab khác (trừ tab Hex-View) thì các tùy chọn của Search sẽ được lược bớt._  
@@ -86,37 +90,66 @@ Khi chuyển sang các tab khác (trừ tab Hex-View) thì các tùy chọn củ
 
 1.Next Code  
 _Tùy chọn này sẽ tìm kiếm lệnh kế tiếp đã được hiểu là Code. Nếu như không được nhận diện là Code, nó sẽ bỏ qua._  
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/d9ecd60e-2fee-42ef-ad4c-12a9dc60d3d9)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/d9ecd60e-2fee-42ef-ad4c-12a9dc60d3d9)
+
 2.Next Data  
-_Tùy chọn này sẽ tìm kiếm các địa chỉ tiếp theo, nơi được IDA hiểu là Data (đã được định nghĩa) hoặc là xử lý dữ liệu tại bất kỳ section nào._  
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/656144a9-19fb-4936-9a65-c1ec46aa0522)  
+_Tùy chọn này sẽ tìm kiếm các địa chỉ tiếp theo, nơi được IDA hiểu là Data (đã được định nghĩa) hoặc là xử lý dữ liệu tại bất kỳ section nào._
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/656144a9-19fb-4936-9a65-c1ec46aa0522)
+
 3.Search Explored và Unexplored  
 _Tính năng đầu tiên sẽ tìm code hoặc data đã được định nghĩa (lệnh hoặc dữ liệu)  
 Và tính năng thứ hai áp dụng với các vùng không được phát hiện là lệnh hoặc dữ liệu hợp lệ:_  
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/61a02746-7f13-4dfb-82a7-0a242f6075ed)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/61a02746-7f13-4dfb-82a7-0a242f6075ed)
+
 4.Search Immediate Value – Search Next Immediate Value  
 _Lệnh này tìm kiếm lệnh đầu tiên hoặc byte dữ liệu có chứa giá trị hằng số được chỉ định.  
 Quá trình tìm kiếm tương đối chậm (nhưng nhanh hơn nhiều so với tìm kiếm text):_  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/c7075cad-b7ad-4e30-9ece-8da56a761435)  
 _Nếu chọn Find all occurrences, IDA sẽ tìm tất cả. Còn nếu không chọn, IDA sẽ tìm kiếm từng lần một,  
 với trường hợp này, để lặp lại việc tìm kiếm, ta sẽ sử dụng Search next immediate value._  
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/41ae65fa-f17a-4a1a-863a-f607913353a2)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/41ae65fa-f17a-4a1a-863a-f607913353a2)
+
 5.Search Text – Search Next Text  
 _Tìm kiếm các chuỗi mà chúng ta nhập vào, bao gồm cả biểu thức chính quy nếu chúng ta muốn._  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/d2eb1817-a838-467a-b65c-bff00a64f447)  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/bd0959fb-c170-4d0a-952d-72b0bd33a5e0)  
-_Nếu chúng ta chỉ tìm kiếm một lần, để tìm tiếp thì sử dụng Search Next Text._  
+_Nếu chúng ta chỉ tìm kiếm một lần, để tìm tiếp thì sử dụng Search Next Text._
+
 6.Search Sequence Of Bytes  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/918094d0-ac24-4182-875c-5dd095b9170d)  
 _Tùy chọn này cho phép ta tìm kiếm các chuỗi các bytes ở hệ thập lục phân:_  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/02b1e146-01a2-414b-8124-895972b15fbc)  
 _Nếu nhấp đúp vào kết quả đầu tiên và tại tùy chọn của IDA,  
 ta thiết lập giá trị 6 tại Number of opcode bytes để hiển thị tối đa 6 bytes tương ứng với mỗi lệnh._  
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/80256aab-a29d-4edc-973b-2f1e0a1e1963)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/80256aab-a29d-4edc-973b-2f1e0a1e1963)
+
 7.Search Not Function  
 _Chức năng này cho phép tìm kiếm byte đầu tiên không thuộc về bất kỳ hàm nào:_  
 Search completed. Found at 004013D7.  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/d7534a18-9f26-43cc-adaa-3e4453473228)  
+
+**Chú ý: IDA không có tính năng Undo(trở về)**  
+
+**#IDA LOADER**  
+_- Ở chế độ Loader này, chương trình sẽ không được thực thi, nhưng nó được IDA phân tích và sau cùng sẽ tạo ra một file ".idb" – là cơ sở dữ liệu lưu các thông tin trong quá trình phân tích, bao gồm đổi tên biến, tên hàm, các chú thích. Và ở chế độ này sẽ không xuất hiện các cửa sổ Registers, cửa sổ Stack và danh sách các Module được nạp vào bộ nhớ mà chương trình sử dụng.  
+Trên thực tế, file ".idb" sẽ là tổng hợp của 5 files(.id0, .id1, .nam, .id2, and .til) được sinh ra trong quá trình phân tích:_  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/dbda526e-5bcc-45f6-8364-61c06ca95f30)  
+
+**#IDA có thể cho biết về các thông tin bổ sung liên quan tới địa chỉ bộ nhớ**  
+```
+Trong IDA lệnh đầu tiên không chỉ thông báo cho ta rằng nó sẽ chuyển một địa chỉ vào một thanh ghi mà nó còn cho biết địa chỉ đó chứa một DWORD, đó chính là thông tin bổ sung thêm mà IDA cung cấp.
+Vậy nên, chúng ta thấy rằng khi đề cập đến các địa chỉ, IDA sẽ kèm theo tiền tố là offset và khi chúng ta đi tìm nội dung của địa chỉ đó, như trong trường hợp này sẽ có giá trị là 0
+```
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/1720d509-39a1-4616-8884-5a582bd92d33)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/801223ea-017c-4f52-9497-b14f28a7e95f)  
+                                                                _**THE END**_
+
+
+
+ 
+
+
+
 
 
 
