@@ -1,4 +1,4 @@
-![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/cbc29681-3392-4339-a025-8ec49bdb9adb)_**Các lệnh ASM cơ bản**_  
+_**Các lệnh ASM cơ bản**_  
   - Assembly là ngôn ngữ của “Reverse Engineering”
   - So sánh LEA và MOV: Đều gán từ phải sang trái
   - VD: MOV EAX, EBP ;Lấy giá trị, nội dung ở thanh ghi EBP, lưu vào thanh ghi EAX     (Tương ứng  a = *b trong ngôn ngữ C++)
