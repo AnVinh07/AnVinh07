@@ -1,4 +1,4 @@
-_**BA BAI TIEP THEO 9,10,11 TIEP THEO TRONG CHUOI BA REVERSING CUA KIENMANOWAR**_  
+_**BA BÀI TIẾP THEO 9,10,11 TRONG CHUỖI BÀI REVERSING CUA KIENMANOWAR**_  
 
 1.Để tìm hiểu các tính năng của IDA, ta sẽ tiếp tục thực hành qua các ví dụ rất đơn giản. Trong phần 9 này là một crackme nhỏ nhẹ, được biên dịch bằng Visual Studio 2015.   
 Để thực thi crackme này có thể bạn cần phải cài đặt phiên bản mới nhất của Visual Studio 2015 C++ runtimes ( https://www.microsoft.com/en-us/download/details.aspx?id=48145: The Visual C++ Redistributable packages install the runtime components to execute compiled C++ Visual Studio 2015 programs).  
