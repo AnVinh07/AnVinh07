@@ -256,7 +256,85 @@ Giờ ta thay đổi EIP về lại câu lệnh ADD EAX, 1 và đặt lại giá
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/4cf40caf-9794-4f37-b908-af785f5a9735)  
 Sau đó nhấn F8 để thực hiện lệnh:  
 ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/0f9a8053-ac63-4b88-a158-63d439534182)  
-Chúng ta thấy rằng cờ OF đã được kích hoạt sau khi thực hiện lệnh. Đó là vì khi cộng 1 vào số dương 0x7fffffff, nếu xem xét đây là thao tác tính toán với số có dấu (signed) thì sẽ khiến kết quả sau khi thực hiện là số âm nhỏ nhất (signed: -2147483648) và dẫn đến kết quả sai:
+Chúng ta thấy rằng cờ OF đã được kích hoạt sau khi thực hiện lệnh. Đó là vì khi cộng 1 vào số dương 0x7fffffff, nếu xem xét đây là thao tác tính toán với số có dấu (signed) thì sẽ khiến kết quả sau khi thực hiện là số âm nhỏ nhất (signed: -2147483648) và dẫn đến kết quả sai:  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/5c7a45d7-9959-422e-ad0f-a9ef03aa8862)  
+Nếu thực hiện phép trừ EAX cho EDX với các giá trị như trên:  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/16d66eef-bd88-4c41-adf7-c92f58c7dcfe)  
+Cờ OF vẫn sẽ được kích hoạt bởi vì khi lấy số âm nhỏ nhất là 0x80000000 trừ đi 0x40 cho kết quả là một giá trị dương rất lớn (0x7FFFFFC0) và khiến cho kết quả của phép toán sai. Do đó, chúng ta có thể kết luận rằng cờ OF được kích hoạt khi có lỗi xảy ra trong quá trình tính toán với dấu. OF được bật khi bit có trọng số cao nhất (được xem là bit dấu) bị thay đổi bằng cách cộng hai số có cùng dấu (hoặc trừ hai số có dấu ngược nhau). Tràn không bao giờ xảy ra khi các dấu của hai toán hạng cộng là khác nhau (hoặc dấu của hai toán hạng trừ là giống nhau).
+
+Như vậy, một số quy tắc để bật OF (overflow) trong phép toán nhị phân/số nguyên là:
+
+Nếu tổng của hai số với bit dấu tắt tạo ra kết quả là một số với bit dấu bật, cờ “overflow” sẽ được bật. Ví dụ: 0100 + 0100 = 1000 (OF được bật)
+Nếu tổng của hai số với bit dấu bật tạo ra kết quả là một số với bit dấu tắt, cờ “overflow” sẽ được bật. Ví dụ: 1000 + 1000 = 0000 (OF được bật)  
+
+3.SIGN FLAG (SF) : Cờ Dấu  
+
+Cờ này khá đơn giản, nó được kích hoạt khi kết quả của việc tính toán là số âm, trong mọi trường hợp. Nó chỉ quan tâm tới kết quả của dấu mà không cần quan tâm kết quả tính toán đúng hay sai. Hay nói cách khác, cờ SF (cờ dấu) được thiết lập 1 khi bit msb của kết quả bằng 1, có nghĩa là kết quả là âm nếu ta làm việc vơi số có dấu.
+
+Ví dụ như sau:  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/b0cae2d8-5217-47c4-898e-5bf3894b91ad)  
+Kết quả của0x8000000 cộng 0x1 vẫn nằm trong dải số âm, là 0x8000001, vì vậy SF được kích hoạt. Chúng ta cũng thấy rằng OF và CF không được kích hoạt vì không có lỗi trong quá trình tính toán của cả signed hoặc unsigned.  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/10208252-521a-41c3-b150-9cde6b1b06b2)  
+Rõ ràng, bộ xử lý khi thực hiện một lệnh liên quan tới tính toán hai thanh ghi, nó không hề biết các thanh ghi này là signed hay unsigned. Còn chúng ta có thể biết được là bởi vì ta thấy các lệnh nhảy có điều kiện ở phía dưới, ngược lại bộ xử lý không biết, do đó, trong bất kỳ hoạt động nào nó cũng sẽ xem xét các lệnh như thể là signed hoặc unsigned tại cùng một thời điểm và thay đổi các cờ cần thiết.
+
+Vì các lệnh nhảy có điều kiện phụ thuộc vào cờ, chương trình sẽ nhìn vào kết quả của các cờ CF (trong phép tính unsigned) hoặc OF (trong phép tính signed) để từ đó đưa ra quyết định nhảy. Ví dụ, nếu có một lệnh JB (lệnh này là unsigned), do đó nó sẽ chỉ nhìn vào cờ CF và không quan tâm đến cờ OF ngay cả khi cả hai cờ này đều được kích hoạt.
+
+Như vậy, trách nhiệm thuộc về người lập trình, người có quy ước về kết quả. Nếu đang làm việc với số có dấu thì chỉ có cờ OF đáng quan tâm trong khi cờ CF có thể bỏ qua, ngược lại khi làm việc với số không dấu thì cờ quan trọng là CF chứ không phải là OF.  
+
+4.ZERO FLAG (ZF)  
+
+Cờ này không phụ thuộc vào dấu  
+ ![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/16d3f0fc-0f0a-49c8-9096-e53838b5b4bf)  
+ Nó được kích hoạt khi:
+
+Phép so sánh (sử dụng một phép trừ) khi cả hai toán hạng đều bằng nhau.
+Khi tăng hoặc giảm và kết quả là bằng không, hoặc trong một phép trừ mà kết quả có được bằng 0.
+Chúng ta có thể chứng minh điều đó:  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/d44ec7e2-0c53-4df0-9807-41eb6dd3bc0f)  
+Ta thiết lập EAX có giá trị 0xffffffff và cộng thêm 1 vào EAX. Điều gì sẽ xảy ra?  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/5292a233-a373-425c-90db-43e391162172)  
+Chúng ta thấy rằng cờ ZF được kích hoạt vì kết quả bằng 0 và nếu ta xem xét cả số unsigned thì cờ CF cũng được kích hoạt vì có tràn khi cộng 1 vào số dương lớn nhất. Trong khi đó, cờ OF không được kích hoạt bởi vì cả hai đều là số có dấu, -1 + 1 = 0 và không có lỗi. Cờ SF cũng không kích hoạt vì kết quả không phải là số âm.
+
+Chúng ta thấy trạng thái các cờ rất quan trọng. Hãy xem liệu lệnh nhảy có điều kiện kế tiếp có xảy ra hay không? Ta patch lệnh SUB EAX, EDX như trên và bên dưới là lệnh nhảy JB 0x401018:   
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/82b51eb2-f9a3-43d9-a559-ba74b4c3ac3e)  
+Sau đó gán EAX = 0x40 và EDX = 0x2, nhấn F8 để thực hiện lệnh SUB:  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/ee0d8203-9a3d-4cf1-8ad2-c3e44703bdab)  
+Mũi tên màu đỏ sẽ nhấp nháy vì thanh ghi EAX lớn hơn thanh ghi EDX, do đó lệnh nhảy sẽ không thực hiện. Ta quan sát các cờ.  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/b4bde26a-f2de-4428-9c96-1f2049ad740f)  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/d5792af7-efbf-4159-a459-ef474ecea02a)  
+JB là một lệnh nhảy unsigned và chỉ nhảy nếu cờ CF được kích hoạt. Rõ ràng ở đây cờ CF không được kích hoạt vì quá trính tính toán là chính xác giữa hai số dương cho ra kết quả là số dương, có nghĩa số đầu tiên lớn hơn số thứ hai, như vậy sẽ không thực hiện nhảy.  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/f678ded6-c048-4377-a2ea-876c818412c8)  
+Nhưng nếu chúng ta thay đổi EAX thành 0x40 và EDX thành 0x80 và thử lặp lại lệnh trừ một lần nữa:  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/f97b4f89-fb91-4ad7-aa9d-4566ce0c9a4b)  
+Trong trường hợp này, vì EAX nhỏ hơn EDX, lệnh nhảy JB sẽ được thực hiện và đi theo hướng của mũi tên màu xanh lá cây.  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/07868df8-fecf-481b-b482-294039b78f05)  
+Vì khi lệnh JB nhìn vào cờ CF, nó sẽ nhảy vì cờ CF đã được bật. Vì kết quả của một thao tác unsigned là số âm và đã gây ra lỗi. Cờ SF cũng được kích hoạt vì kết quả là âm, còn cờ OF không được kích hoạt.
+
+Lệnh JB sẽ nhảy căn cứ theo trạng thái của cờ CF nhưng nếu tôi thay đổi thành lệnh JL.  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/aadc4b9e-0435-4110-a9d5-dc6e32016bbf)  
+Trong trường hợp này, hướng thực hiện thay đổi và đi theo mũi tên màu xanh lá cây bởi vì toán hạng đầu tiên nhỏ hơn toán hạng thứ hai, nhưng lệnh nhảy JL căn cứ vào cờ nào?  
+![image](https://github.com/AnVinh07/AnVinh07/assets/131764804/140e4c15-f338-4f10-8f31-315c5376ac47)  
+Chúng ta thấy rằng lệnh JL sẽ thực hiện nếu cờ SF khác 0. Trong trường hợp này cờ SF = 1, do vậy sẽ nhảy và cũng là logic vì toán hạng đầu tiên nhỏ hơn toán hạng thứ hai. Lệnh SUB tương tự cách hoạt động của lệnh so sánh CMP, chỉ khác là SUB lưu kết quả còn CMP thì không.
+
+Kết luận của bài viết này là không nhất thiết phải nhìn vào cờ để biết điều gì sẽ xảy ra với các nhảy có điều kiện, nó thuộc về hoạt động nội bộ bên trong. Chúng ta chỉ cần nhớ rằng, nếu hai toán hạng bằng nhau, lệnh JZ sẽ thực hiện. Nếu toán hạng đầu nhỏ hơn và là unsigned, thì sẽ nhảy nếu nó là lệnh JB. Còn nếu toán hạng đầu nhỏ hơn nhưng ở kiểu signed thì sẽ nhảy nếu là lệnh JL. Như vậy, ta chỉ cần quan sát cột thứ ba trong bảng signed và unsigned là đủ.  
+
+**_THE END_**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
